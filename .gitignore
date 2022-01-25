@@ -1,0 +1,7 @@
+graphql_server/node_modules/
+graphql_server/dist/
+node_modules/
+.DS_Store
+dist
+dist-ssr
+*.local

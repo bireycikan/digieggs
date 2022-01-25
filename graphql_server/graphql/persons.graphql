@@ -1,0 +1,52 @@
+scalar DateTime
+scalar URL
+
+type Query {
+  persons: [Person!]
+  getPersonsByName(name: String!): [Person!]
+  getPersonsByPage(first: Int!, after: String): Response
+}
+
+type Person {
+  id: ID!
+  name: String
+  status: String
+  species: String
+  type: String
+  gender: String
+  origin: Origin!
+  location: Location!
+  image: String
+  episode: [URL!]
+  url: String
+  created: DateTime
+}
+
+type Location {
+  name: String!
+  url: URL
+}
+
+type Origin {
+  name: String!
+  url: URL
+}
+
+type Edge {
+  cursor: String
+  node: Person
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean
+}
+
+type Response {
+  edges: [Edge!]
+  pageInfo: PageInfo
+}
+
+schema {
+  query: Query
+}

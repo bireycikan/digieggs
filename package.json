@@ -1,0 +1,32 @@
+{
+  "name": "digieggs",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "concurrently \"npm run client:dev\" \"npm run server:dev\"",
+    "server:dev": "tsc --project graphql_server/ && copyfiles -u 1 graphql_server/data/**/*.* graphql_server/graphql/*.graphql graphql_server/dist/ && nodemon graphql_server/dist/server.js",
+    "client:dev": "vite --open",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.5.7",
+    "apollo-boost": "^0.4.9",
+    "graphql": "^16.2.0",
+    "react": "^17.0.2",
+    "react-apollo": "^3.1.5",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
+    "react-infinite-scroll-component": "^6.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.38",
+    "@types/react-dom": "^17.0.11",
+    "@vitejs/plugin-react": "^1.0.7",
+    "concurrently": "^7.0.0",
+    "copyfiles": "^2.4.1",
+    "nodemon": "^2.0.15",
+    "sass": "^1.49.0",
+    "typescript": "^4.5.5",
+    "vite": "^2.7.2"
+  }
+}

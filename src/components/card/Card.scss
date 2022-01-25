@@ -1,0 +1,47 @@
+.person-card {
+  display: flex;
+  flex-direction: row;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.1);
+  margin: 2rem;
+  flex: 40%;
+
+  .person-card-image {
+    width: 125px;
+    height: 125px;
+  }
+
+  .person-card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    width: 100%;
+    font-size: 10px;
+
+    .person-card-title {
+      margin-left: 8px;
+
+      &:first-of-type {
+        flex-grow: 1;
+        margin-top: 8px;
+      }
+
+      &:last-of-type {
+        margin-bottom: 8px;
+        margin-top: 8px;
+      }
+    }
+
+    .text-bold {
+      font-weight: 700;
+      opacity: 0.8;
+    }
+
+    .text-light {
+      color: #888888;
+    }
+  }
+}
