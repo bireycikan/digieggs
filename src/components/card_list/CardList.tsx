@@ -11,26 +11,11 @@ import { CardListProps } from '@/types/CardList';
 
 
 
-const CardList: React.FC<CardListProps> = ({ collections, filter }) => {
-
-  console.log('filter', filter)
-  const getCollections = () => {
-
-    if (filter) {
-      return collections.filter((col) => {
-        return col.name.includes(filter);
-      })
-    }
-    else {
-      return collections;
-    }
-  }
-
-
+const CardList: React.FC<CardListProps> = ({ collections }) => {
   return (
     <div className='card-list'>
       {
-        collections && getCollections().map((col) => {
+        collections && collections.map((col) => {
           return <Card key={col.id} item={col} />
         })
       }

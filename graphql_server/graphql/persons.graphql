@@ -4,7 +4,7 @@ scalar URL
 type Query {
   persons: [Person!]
   getPersonsByName(name: String!): [Person!]
-  getPersonsByPage(first: Int!, after: String): Response
+  getPersonsByPage(offset: Int!, limit: Int!, filter: String): [Person!]
 }
 
 type Person {
@@ -42,10 +42,15 @@ type PageInfo {
   hasNextPage: Boolean
 }
 
-type Response {
-  edges: [Edge!]
-  pageInfo: PageInfo
-}
+# type Response {
+#   edges: [Edge!]
+#   pageInfo: PageInfo
+# }
+
+# type Response {
+#   personList: [Person!]
+#   hasMore: Boolean
+# }
 
 schema {
   query: Query

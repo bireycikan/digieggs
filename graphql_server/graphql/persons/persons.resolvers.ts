@@ -1,7 +1,5 @@
-import { Pagination, Person } from "../../types/persons"
 const personsModel = require('./persons.model');
 const { DateTimeResolver, URLResolver } = require('graphql-scalars');
-
 
 
 const resolverMap = {
@@ -15,8 +13,8 @@ const resolverMap = {
       return personsModel.getPersonsByName(args.name);
     },
     getPersonsByPage: (_: any, args: any) => {
-      const { first, after } = args;
-      return personsModel.getPersonsByPage(first, after);
+      const { limit, offset, filter } = args;
+      return personsModel.getPersonsByPage(offset, limit, filter);
     }
   }
 }

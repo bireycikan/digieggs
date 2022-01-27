@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useQuery } from "react-apollo"
 import { gql } from "@apollo/client"
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -14,22 +14,13 @@ import { Edge, Person, PageInfo } from '@/types/Person';
 
 
 const GET_PERSONS = gql`
-  query GetPersonsByPage($first: Int!, $after: String) {
-    getPersonsByPage(first: $first, after: $after) {
-      pageInfo {
-        endCursor
-        hasNextPage
-      }
-      edges {
-        cursor
-        node {
-          name
-          id
-          location {
-            name
-          }
-          image
-        }
+  query GetPersonsByPage($offset: Int!, $limit: Int!, $filter: String) {
+    getPersonsByPage(offset: $offset, limit: $limit, filter: $filter) {
+      name
+      id
+      image
+      location {
+        name
       }
     }
   }
@@ -37,28 +28,30 @@ const GET_PERSONS = gql`
 
 
 const Character: React.FC = () => {
+  const [hasMore, setHasMore] = useState(true);
   const { filterChoice } = useContext(FilterContext)
   const { loading, error, data, fetchMore } = useQuery(GET_PERSONS, {
     variables: {
-      first: 20
+      limit: 20,
+      offset: 0,
+      filter: filterChoice
     }
   })
-
+  
+  console.log('filterChoice', filterChoice)
   console.log({loading, error, data})
-
+  
   if (loading) return <h1>Loading...</h1>
   if (error) return <h1>ERROR: {error}</h1>
-
-  console.log('data', data)
-
-  let characters: Array<Person> = data?.getPersonsByPage.edges.map((e: Edge) => e.node);
-  let pageInfo: PageInfo = data?.getPersonsByPage.pageInfo;
-
+  
+  let characters: Array<Person> = data.getPersonsByPage;
 
   const loadMore: () => void = () => {
     fetchMore({
       variables: {
-        after: pageInfo.endCursor
+        limit: 20,
+        offset: data.getPersonsByPage.length,
+        filter: filterChoice
       }
     })
   }
@@ -68,10 +61,10 @@ const Character: React.FC = () => {
     <InfiniteScroll
       dataLength={characters.length}
       next={loadMore}
-      hasMore={pageInfo.hasNextPage}
+      hasMore={true}
       loader={<h1>Loading...</h1>}
     >
-      <CardList collections={characters} filter={filterChoice} />
+      <CardList collections={characters} />
     </InfiniteScroll>
   );
 }
